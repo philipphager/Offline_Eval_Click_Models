@@ -14,7 +14,7 @@ torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 random.seed(seed)
 
-gen_sample10 = True    ### This boolean allows to recreate the experiment in Section 5.1 of the paper
+gen_sample10 = False    ### This boolean allows to recreate the experiment in Section 5.1 of the paper
 
 print("### First : Parse the dataset")
 parse_mslr(path)
