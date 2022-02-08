@@ -1,0 +1,15 @@
+test.py
+*.lprof
+*.out
+*.err
+*.pt
+*.npy
+lightning_logs/
+__pycache__/
+logs/
+venv/
+Pipfile
+mlruns/
+.aim/
+*.sh
+specs_clara.yml
