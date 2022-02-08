@@ -7,7 +7,7 @@ This repository contains the supporting code and implementation details for our 
 ### Data Processing
 
 **Real-world datasets** :
-We first break down sessions into separate SERPs as we do not wish to use the additional information contained in a session beyond the current page. Then, we restrict the dataset to queries that have been annotated. Finally, we discard all pages without clicks. After pre-processing, the Yandex dataset contains 255,467 unique documents and 4,991 unique queries and the CLARA dataset contains 1,345,880 documents and 1,507 uniques queries. Both datasets have a cutoff rank of 10. 
+We first break down sessions into separate SERPs as we do not wish to use the additional information contained in a session beyond the current page. Then, we restrict the dataset to queries that have been annotated. Finally, we discard all pages without clicks. After pre-processing, the Yandex dataset contains 255,467 unique documents and 4,991 unique queries and the CLARA dataset contains 1,345,880 unique documents and 1,507 unique queries. Both datasets have a cutoff rank of 10. 
 
 For perplexity computation, we use a chronological split where the test and validation set both represent 1/30th of the full Yandex dataset and 1/20th of the full CLARA dataset.
 
@@ -24,7 +24,7 @@ We restrict the [MSLR-WEB10K](https://www.microsoft.com/en-us/research/project/m
 
 **Query distribution** : By fitting a power-law model onto the CLARA data, we find that the k-th most frequent query appears with probability <img src="https://render.githubusercontent.com/render/math?math=p \propto k^{-1.12}">, and we adopt this query distribution for the simulated data.
 
-**Near-oracle suboptimality** : We add a centered Gaussian perturbation with variance 0.15 to the rescaled relevances <img src="https://render.githubusercontent.com/render/math?math=(2^{rel(q,d)} - 1) / 15">.
+**Near-oracle suboptimality** : We add a centered Gaussian perturbation with variance 0.1 to the rescaled relevances <img src="https://render.githubusercontent.com/render/math?math=(2^{rel(q,d)} - 1) / 15">.
 
 **Plackett-Luce-induced Stochasticity** : The policies used for training are made stochastic by sampling from a Plackett-Luce model. In practice we use the Gumbel sampling trick (used for example [here](https://arxiv.org/abs/2105.00855)) with a temperature specific to each policy : 0.1 for the noisy oracle and the Lambdamart policy and 0.03 for bm25. The training policies are therefore stochastic but rather narrow.
 
@@ -136,7 +136,7 @@ pip install -r requirements.txt
  python utils/preprocess_dataset.py --dataset [path/serp_based]
  python utils/filter_ground_truth.py --dataset [path/serp_based]
 ```
-Now the ready-to-train Yandex data is ready !
+Now the Yandex data is ready to train !
 
 ### To generate the simulated data :
 1. Download the [MSLR-WEB10K](https://www.microsoft.com/en-us/research/project/mslr/) dataset.
@@ -145,7 +145,7 @@ Now the ready-to-train Yandex data is ready !
 4. ``` python generate_data.py ```
 
 
-This will generate datasets for 3 different internal click models (DBN, CoCM, CoCM mismatch), each with 3 training policies (PL-oracle, PL-bm25, PL-lambdamart), each with 4 test policies (oracle, random, bm25, lambdamart), as well as the data required for the experiment in Section 6.1.
+This will generate datasets for 3 different internal click models (DBN, CoCM, CoCM mismatch), each with 3 training policies (PL-oracle, PL-bm25, PL-lambdamart), each with 4 test policies (oracle, random, bm25, lambdamart), as well as the data required for the experiment in Section 6.1 if you switch gen_sample10 to True.
 
 ### To launch click model training on a specific dataset:
 ```
