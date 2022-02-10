@@ -2,7 +2,6 @@ test.py
 *.lprof
 *.out
 *.err
-*.pt
 *.npy
 lightning_logs/
 __pycache__/
