@@ -188,15 +188,12 @@ else:
                     data_ref = overall_results[(overall_results['Model'] == ref_model) & (overall_results['Metric'] == metric) & (overall_results['Rank'] == rank)]
                     data = overall_results[(overall_results['Model'] == model) & (overall_results['Metric'] == metric) & (overall_results['Rank'] == rank)]
 
-                    cm = sms.CompareMeans(sms.DescrStatsW(data_ref["Value"]), sms.DescrStatsW(data["Value"]))
+                    t_test_res = st.ttest_ind(data_ref["Value"], data["Value"], equal_var=False)
                     print("'-------------------------")
-                    print("%s vs %s on %s@%s :" % (ref_model, model, metric, rank))
-                    ci = cm.tconfint_diff(usevar='unequal')
-                    print("Confidence interval : ", ci)
-                    if ci[0] > 0:
-                        print("%s is statistically significantly higher" % ref_model)
-                    elif ci[1] < 0:
-                        print("%s is statistically significantly lower" % ref_model)
+                    print("%s \n \t vs \n%s \n \ton %s@%s :" % (ref_model, model, metric, rank))
+                    print(t_test_res)
+                    if t_test_res.pvalue < 0.05:
+                        print("Statistically significant")
                     else:
                         print("Not statistically significant")
 
